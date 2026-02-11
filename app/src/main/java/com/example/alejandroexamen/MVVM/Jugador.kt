@@ -1,10 +1,10 @@
 package com.example.alejandroexamen.MVVM
 
-class Jugador(
-    var idJugador : String = "",
-    val nombre : String = "",
-    val numero : String = "",
-    val nacionalidad : String = "",
-    val posicion : String = "",
-    val imagenURL : String = ""
+data class Jugador(
+    var idJugador: String = "",
+    var nombre: String = "",
+    var numero: String = "",
+    var nacionalidad: String = "",
+    var posicion: String = "",
+    var imagen: String = ""
 )

@@ -3,13 +3,13 @@ package com.example.alejandroexamen.navegacion
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
-sealed class Routes: NavKey {
+sealed class Routes : NavKey {
 
     @Serializable
-    data class Login(val id: String) : Routes()
+    data object Login: Routes()
 
     @Serializable
-    data class Home(val id: String): Routes()
+    data object Home: Routes()
 
     @Serializable
     data class JugadorAñadir(val id: String): Routes()

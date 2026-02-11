@@ -17,7 +17,7 @@ class AñadirJugadoresViewModel : ViewModel() {
         getJugador()
     }
 
-    fun updateJugador(idJugador: String, nuevoNombre: String, nuevoNumero: String, nuevaNacionalidad: String, nuevaPosicion : String, nuevaUrl: String) {
+    fun updateJugador(idJugador: String, nuevoNombre: String, nuevoNumero: String, nuevaNacionalidad: String, nuevaPosicion: String, nuevaUrl: String) {
         val datosActualizados = mapOf(
             "nombre" to nuevoNombre,
             "numero" to nuevoNumero,
@@ -25,11 +25,7 @@ class AñadirJugadoresViewModel : ViewModel() {
             "posicion" to nuevaPosicion,
             "imagen" to nuevaUrl
         )
-
-        jugadoresCollection.document(idJugador)
-            .update(datosActualizados)
-            .addOnSuccessListener { Log.i("Firebase", "Actualizado con éxito") }
-            .addOnFailureListener { e -> Log.e("Firebase", "Error: ${e.message}") }
+        jugadoresCollection.document(idJugador).update(datosActualizados)
     }
 
     private fun getJugador() {
@@ -56,16 +52,9 @@ class AñadirJugadoresViewModel : ViewModel() {
             numero = numero,
             nacionalidad = nacionalidad,
             posicion = posicion,
-            imagenURL = imagen
+            imagen = imagen
         )
-
         jugadoresCollection.add(jugador)
-            .addOnSuccessListener { doc ->
-                Log.i("Firebase", "Añadido con ID: ${doc.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firebase", "Error al guardar: ${e.message}")
-            }
     }
 
     fun deleteJugador(idJugador: String) {

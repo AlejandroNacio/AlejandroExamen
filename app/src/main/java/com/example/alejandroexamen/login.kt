@@ -1,4 +1,4 @@
-package com.example.malaga.screens
+package com.example.alejandroexamen
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -23,7 +23,6 @@ import com.example.alejandroexamen.R
 fun LoginScreenUI(
     auth: FirebaseAuth,
     onLoginOk: () -> Unit,
-    onRegisterClick: () -> Boolean,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

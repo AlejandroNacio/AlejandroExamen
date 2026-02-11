@@ -25,26 +25,45 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
 
+import androidx.compose.runtime.LaunchedEffect // Necesario para cargar datos
+
 @Composable
-fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNavigateToDetail: (String) -> Unit) {
+fun JugadoresScreen(
+    viewModel: AñadirJugadoresViewModel = viewModel(),
+    idJugadorParaEditar: String,
+    onBack: () -> Unit
+) {
+    var nombre by remember { mutableStateOf("") }
+    var numero by remember { mutableStateOf("") }
+    var nacionalidad by remember { mutableStateOf("") }
+    var posicion by remember { mutableStateOf("") }
+    var imagenURL by remember { mutableStateOf("") }
+
+    LaunchedEffect(idJugadorParaEditar) {
+        if (idJugadorParaEditar.isNotEmpty()) {
+            val jugador = viewModel.obtenerJugadoresPorId(idJugadorParaEditar)
+            jugador?.let {
+                nombre = it.nombre
+                numero = it.numero
+                nacionalidad = it.nacionalidad
+                posicion = it.posicion
+                imagenURL = it.imagen
+            }
+        }
+    }
+
     Scaffold { paddingValues ->
-
-        val jugadores by viewModel.jugadores.collectAsState()
-        var nombre by remember { mutableStateOf("") }
-        var numero by remember { mutableStateOf("") }
-        var nacionalidad by remember { mutableStateOf("") }
-        var posicion by remember { mutableStateOf("") }
-        var imagenURL by remember { mutableStateOf("") }
-
-        var jugadorIdSeleccionado by remember { mutableStateOf<String?>(null) }
-
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            Text(text = "Nuevo jugador", style = MaterialTheme.typography.headlineSmall)
+            Text(
+                text = if (idJugadorParaEditar.isEmpty()) "Nuevo jugador" else "Editar jugador",
+                style = MaterialTheme.typography.headlineSmall
+            )
+
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
@@ -59,18 +78,17 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
             OutlinedTextField(
                 value = numero,
                 onValueChange = { numero = it },
-                label = { Text("numero ") },
+                label = { Text("Número") },
                 modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-
             OutlinedTextField(
                 value = nacionalidad,
                 onValueChange = { nacionalidad = it },
-                label = { Text("Posicion") },
+                label = { Text("Nacionalidad") },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -79,7 +97,7 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
             OutlinedTextField(
                 value = posicion,
                 onValueChange = { posicion = it },
-                label = { Text("Posicion") },
+                label = { Text("Posición") },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -89,21 +107,18 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
                 value = imagenURL,
                 onValueChange = { imagenURL = it },
                 label = { Text("URL imagen") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                maxLines = 1,
+                modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 onClick = {
-
-                    if (jugadorIdSeleccionado == null) {
+                    if (idJugadorParaEditar.isEmpty()) {
                         viewModel.addJugadores(nombre, numero, nacionalidad, posicion, imagenURL)
                     } else {
                         viewModel.updateJugador(
-                            idJugador = jugadorIdSeleccionado!!,
+                            idJugador = idJugadorParaEditar,
                             nuevoNombre = nombre,
                             nuevoNumero = numero,
                             nuevaNacionalidad = nacionalidad,
@@ -111,32 +126,24 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
                             nuevaUrl = imagenURL
                         )
                     }
-
-                    nombre = ""; numero = ""; nacionalidad = ""; posicion = ""; imagenURL = ""
-                    jugadorIdSeleccionado = null
+                    onBack()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = nombre.isNotBlank() && numero.isNotBlank()
+                enabled = nombre.isNotBlank() && numero.isNotBlank(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27D21F))
             ) {
-                Text(if (jugadorIdSeleccionado == null) "Agregar Jugador" else "Guardar Cambios")
+                Text(if (idJugadorParaEditar.isEmpty()) "Agregar Jugador" else "Guardar Cambios")
             }
 
-            if (jugadorIdSeleccionado != null) {
-                Button(
-                    onClick = {
-                        nombre = ""; numero = ""; nacionalidad = ""; posicion = ""; imagenURL = ""
-                        jugadorIdSeleccionado = null
-                    },
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF27D21F)
-                    )
-                ) {
-                    Text("Cancelar")
-                }
-            }
+            Spacer(modifier = Modifier.height(8.dp))
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                onClick = { onBack() },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.outlinedButtonColors()
+            ) {
+                Text("Cancelar")
+            }
         }
     }
 }
