@@ -17,12 +17,13 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.example.alejandroexamen.R
 
 @Composable
 fun LoginScreenUI(
     auth: FirebaseAuth,
     onLoginOk: () -> Unit,
-    onRegisterClick: () -> Unit
+    onRegisterClick: () -> Boolean,
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -34,7 +35,7 @@ fun LoginScreenUI(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.),
+            painter = painterResource(id = R.drawable.logoo),
             contentDescription = null,
         )
         Text("Inicia sesión", style = MaterialTheme.typography.displayMedium)
@@ -67,9 +68,9 @@ fun LoginScreenUI(
                 }
             },
             modifier = Modifier.fillMaxWidth().height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4A5D91))
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27D21F))
         ) {
-            Text("Entrar")
+            Text("Login")
         }
 
         Spacer(modifier = Modifier.height(16.dp))

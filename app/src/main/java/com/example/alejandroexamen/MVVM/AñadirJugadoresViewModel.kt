@@ -23,7 +23,7 @@ class AñadirJugadoresViewModel : ViewModel() {
             "numero" to nuevoNumero,
             "nacionalidad" to nuevaNacionalidad,
             "posicion" to nuevaPosicion,
-            "imagenUrl" to nuevaUrl
+            "imagen" to nuevaUrl
         )
 
         jugadoresCollection.document(idJugador)
@@ -56,7 +56,7 @@ class AñadirJugadoresViewModel : ViewModel() {
             numero = numero,
             nacionalidad = nacionalidad,
             posicion = posicion,
-            imagen = imagen
+            imagenURL = imagen
         )
 
         jugadoresCollection.add(jugador)

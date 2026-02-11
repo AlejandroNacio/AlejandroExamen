@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavEntry
-import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.example.alejandroexamen.MVVM.JugadoresScreen
 import com.example.malaga.screens.LoginScreenUI
@@ -34,7 +33,7 @@ fun GestionNavegacion(auth: FirebaseAuth){
                 is Routes.Home -> NavEntry(key)
                 {
                     JugadoresScreen(onNavigateToDetail = { id ->
-                        pilaNavegacion.add(Routes.Home())
+                        pilaNavegacion.add(Routes.Home(id))
                     })
                 }
                 else -> NavEntry(key) {

@@ -4,16 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -25,13 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 
 @Composable
@@ -43,7 +34,7 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
         var numero by remember { mutableStateOf("") }
         var nacionalidad by remember { mutableStateOf("") }
         var posicion by remember { mutableStateOf("") }
-        var imagen by remember { mutableStateOf("") }
+        var imagenURL by remember { mutableStateOf("") }
 
         var jugadorIdSeleccionado by remember { mutableStateOf<String?>(null) }
 
@@ -95,8 +86,8 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
-                value = imagen,
-                onValueChange = { imagen = it },
+                value = imagenURL,
+                onValueChange = { imagenURL = it },
                 label = { Text("URL imagen") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -109,7 +100,7 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
                 onClick = {
 
                     if (jugadorIdSeleccionado == null) {
-                        viewModel.addJugadores(nombre, numero, nacionalidad, posicion, imagen)
+                        viewModel.addJugadores(nombre, numero, nacionalidad, posicion, imagenURL)
                     } else {
                         viewModel.updateJugador(
                             idJugador = jugadorIdSeleccionado!!,
@@ -117,11 +108,11 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
                             nuevoNumero = numero,
                             nuevaNacionalidad = nacionalidad,
                             nuevaPosicion = posicion,
-                            nuevaUrl = imagen
+                            nuevaUrl = imagenURL
                         )
                     }
 
-                    nombre = ""; numero = ""; nacionalidad = ""; posicion = ""; imagen = ""
+                    nombre = ""; numero = ""; nacionalidad = ""; posicion = ""; imagenURL = ""
                     jugadorIdSeleccionado = null
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -133,12 +124,12 @@ fun JugadoresScreen(viewModel: AñadirJugadoresViewModel = viewModel(), onNaviga
             if (jugadorIdSeleccionado != null) {
                 Button(
                     onClick = {
-                        nombre = ""; numero = ""; nacionalidad = ""; posicion = ""; imagen = ""
+                        nombre = ""; numero = ""; nacionalidad = ""; posicion = ""; imagenURL = ""
                         jugadorIdSeleccionado = null
                     },
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Gray
+                        containerColor = Color(0xFF27D21F)
                     )
                 ) {
                     Text("Cancelar")

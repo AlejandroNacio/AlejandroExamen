@@ -6,5 +6,5 @@ class Jugador(
     val numero : String = "",
     val nacionalidad : String = "",
     val posicion : String = "",
-    val imagen : String = ""
+    val imagenURL : String = ""
 )
