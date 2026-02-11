@@ -10,4 +10,7 @@ sealed class Routes: NavKey {
 
     @Serializable
     data class Home : Routes()
+
+    @Serializable
+    data class AñadirJugadores(val idJugador: String? = null) : Routes()
 }

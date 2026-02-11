@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 class AñadirJugadoresViewModel : ViewModel() {
     private val db = Firebase.firestore
     private val jugadoresCollection = db.collection("jugadores")
-
     private val _jugadores = MutableStateFlow<List<Jugador>>(emptyList())
     val jugadores: StateFlow<List<Jugador>> = _jugadores
 
@@ -18,7 +17,7 @@ class AñadirJugadoresViewModel : ViewModel() {
         getJugador()
     }
 
-    fun updateJugador(idJugador: String, nuevoNombre: String, nuevoNumero: Int, nuevaNacionalidad: String, nuevaPosicion : String, nuevaUrl: String) {
+    fun updateJugador(idJugador: String, nuevoNombre: String, nuevoNumero: String, nuevaNacionalidad: String, nuevaPosicion : String, nuevaUrl: String) {
         val datosActualizados = mapOf(
             "nombre" to nuevoNombre,
             "numero" to nuevoNumero,
@@ -43,7 +42,7 @@ class AñadirJugadoresViewModel : ViewModel() {
             if (snapshot != null) {
                 val jugadoresList = snapshot.documents.mapNotNull { doc ->
                     val jugador = doc.toObject(Jugador::class.java)
-                    jugador?.id = doc.id
+                    jugador?.idJugador = doc.id
                     jugador
                 }
                 _jugadores.value = jugadoresList
@@ -51,7 +50,7 @@ class AñadirJugadoresViewModel : ViewModel() {
         }
     }
 
-    fun addJugadores(nombre: String, numero: Int, nacionalidad: String, posicion: String, imagen: String) {
+    fun addJugadores(nombre: String, numero: String, nacionalidad: String, posicion: String, imagen: String) {
         val jugador = Jugador(
             nombre = nombre,
             numero = numero,
@@ -81,6 +80,6 @@ class AñadirJugadoresViewModel : ViewModel() {
     }
 
     fun obtenerJugadoresPorId(id: String): Jugador? {
-        return _jugadores.value.find { it.id == id }
+        return _jugadores.value.find { it.idJugador == id }
     }
 }

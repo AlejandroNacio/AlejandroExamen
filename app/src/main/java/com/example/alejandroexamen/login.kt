@@ -1,7 +1,7 @@
 package com.example.malaga.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.google.firebase.Firebase
@@ -32,6 +33,10 @@ fun LoginScreenUI(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.),
+            contentDescription = null,
+        )
         Text("Inicia sesión", style = MaterialTheme.typography.displayMedium)
 
         Spacer(modifier = Modifier.height(32.dp))
